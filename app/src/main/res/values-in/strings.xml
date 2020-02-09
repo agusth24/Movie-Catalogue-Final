@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Katalog Film</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="tab_movies">Film</string>
+    <string name="tab_tv_show">Acara TV</string>
+    <string name="title_movies">Film</string>
+    <string name="title_tv_show">Acara TV</string>
+    <string name="title_favorite">Favorit</string>
+    <string name="title">Judul</string>
+    <string name="date">Tanggal</string>
+
+    <string name="set">----------</string>
+    <string name="movie_info">INFO FILM</string>
+    <string name="rating">Peringkat :</string>
+    <string name="country">Bahasa :</string>
+    <string name="overview">GAMBARAN</string>
+    <string name="setting">Aturan</string>
+    <string name="now_showing">SEKARANG TAYANG</string>
+
+    <string name="add_favorite">Ditambahkan ke Favorit</string>
+    <string name="fail_favorite">Gagal ditambahkan ke Favorit</string>
+    <string name="remove_favorite">Dihapus dari Favorit</string>
+    <string name="fail_remove">Gagal dihapus dari Favorit</string>
+    <string name="notif">Pemberitahuan</string>
+</resources>
