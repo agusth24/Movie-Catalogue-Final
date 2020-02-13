@@ -18,13 +18,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             DatabaseContract.TABLE_MOVIES,
-            DatabaseContract.MoviesColumns._ID,
-            DatabaseContract.MoviesColumns.TITLE,
-            DatabaseContract.MoviesColumns.DATE,
-            DatabaseContract.MoviesColumns.PHOTO,
-            DatabaseContract.MoviesColumns.RATING,
-            DatabaseContract.MoviesColumns.OVERVIEW,
-            DatabaseContract.MoviesColumns.COUNTRY
+            DatabaseContract.TableColumns._ID,
+            DatabaseContract.TableColumns.TITLE,
+            DatabaseContract.TableColumns.DATE,
+            DatabaseContract.TableColumns.PHOTO,
+            DatabaseContract.TableColumns.RATING,
+            DatabaseContract.TableColumns.OVERVIEW,
+            DatabaseContract.TableColumns.COUNTRY
     );
 
     private static final String SQL_CREATE_TABLE_TV_SHOW = String.format("CREATE TABLE %s"
@@ -33,10 +33,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
             DatabaseContract.TABLE_TV_SHOW,
-            DatabaseContract.TvShowColumns._ID,
-            DatabaseContract.TvShowColumns.TITLE,
-            DatabaseContract.TvShowColumns.OVERVIEW,
-            DatabaseContract.TvShowColumns.PHOTO
+            DatabaseContract.TableColumns._ID,
+            DatabaseContract.TableColumns.TITLE,
+            DatabaseContract.TableColumns.OVERVIEW,
+            DatabaseContract.TableColumns.PHOTO
     );
 
     public DatabaseHelper(Context context) {

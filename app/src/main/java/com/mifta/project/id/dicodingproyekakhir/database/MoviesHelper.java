@@ -11,13 +11,13 @@ import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 
 import java.util.ArrayList;
 
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.COUNTRY;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.DATE;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.OVERVIEW;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.PHOTO;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.RATING;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns.TITLE;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.MoviesColumns._ID;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.COUNTRY;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.DATE;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.OVERVIEW;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.PHOTO;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.RATING;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.TITLE;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns._ID;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TABLE_MOVIES;
 
 public class MoviesHelper {
@@ -80,6 +80,15 @@ public class MoviesHelper {
         return arrayList;
     }
 
+    public Cursor queryById(String id) {
+        return database.query(DATABASE_TABLE, null, _ID + " = ?", new String[]{id}, null, null, null, null);
+    }
+
+    public Cursor query() {
+        return database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " ASC");
+    }
+
+
     public long insert(MoviesItems movie) {
         ContentValues args = new ContentValues();
         args.put(_ID, movie.getId());
@@ -106,5 +115,13 @@ public class MoviesHelper {
         }
         cursor.close();
         return exist;
+    }
+
+    public long insertProvider(ContentValues values) {
+        return database.insert(DATABASE_TABLE, null, values);
+    }
+
+    public int deleteProvider(String id) {
+        return database.delete(DATABASE_TABLE, _ID + " = ?", new String[]{id});
     }
 }

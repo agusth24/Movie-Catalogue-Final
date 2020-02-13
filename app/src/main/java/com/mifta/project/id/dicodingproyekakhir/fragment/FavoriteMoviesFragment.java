@@ -2,11 +2,14 @@ package com.mifta.project.id.dicodingproyekakhir.fragment;
 
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,23 +20,20 @@ import android.view.ViewGroup;
 import com.mifta.project.id.dicodingproyekakhir.R;
 import com.mifta.project.id.dicodingproyekakhir.activity.MoviesDetailActivity;
 import com.mifta.project.id.dicodingproyekakhir.adapter.ListMovieAdapter;
-import com.mifta.project.id.dicodingproyekakhir.database.MoviesHelper;
+import com.mifta.project.id.dicodingproyekakhir.database.MappingHelper;
 import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 
 import java.util.ArrayList;
+
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FavoriteMoviesFragment extends Fragment {
-
-
     private RecyclerView rvMovie;
-    private MoviesHelper movieHelper;
-
     private ListMovieAdapter adapter;
     private ArrayList<MoviesItems> listMovies;
-
 
     public FavoriteMoviesFragment() {
     }
@@ -49,18 +49,16 @@ public class FavoriteMoviesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvMovie = view.findViewById(R.id.rv_movies);
-
-        movieHelper = MoviesHelper.getInstance(getContext());
         listMovies = new ArrayList<>();
-        adapter = new ListMovieAdapter();
+        adapter = new ListMovieAdapter(getContext());
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        movieHelper.open();
+        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI_MOVIE, null, null, null, null);
         listMovies.clear();
-        listMovies.addAll(movieHelper.getAllMovies());
+        listMovies.addAll(MappingHelper.mapCursorToArrayList(cursor));
         adapter.setData(listMovies);
         adapter.notifyDataSetChanged();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -73,13 +71,15 @@ public class FavoriteMoviesFragment extends Fragment {
             }
 
         });
-        movieHelper.close();
+
     }
 
     private void showSelectedMovie(MoviesItems movie) {
-        Intent moveWithObjectActivity = new Intent(getContext(), MoviesDetailActivity.class);
-        moveWithObjectActivity.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
-        startActivity(moveWithObjectActivity);
+        Intent intent = new Intent(getContext(), MoviesDetailActivity.class);
+        Uri uri = Uri.parse(CONTENT_URI_MOVIE + "/" + movie.getId());
+        intent.setData(uri);
+        intent.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
+        startActivity(intent);
     }
 
 }

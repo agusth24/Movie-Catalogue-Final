@@ -1,7 +1,18 @@
 package com.mifta.project.id.dicodingproyekakhir.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import static android.provider.BaseColumns._ID;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.COUNTRY;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.DATE;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.OVERVIEW;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.PHOTO;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.RATING;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.TITLE;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.getColumnInt;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.getColumnString;
 
 public class MoviesItems implements Parcelable {
     private int id;
@@ -37,6 +48,26 @@ public class MoviesItems implements Parcelable {
             return new MoviesItems[size];
         }
     };
+
+    public MoviesItems(int id, String title, String date, String photo, String rating, String overview, String country) {
+        this.id = id;
+        this.title = title;
+        this.date = date;
+        this.photo = photo;
+        this.rating = rating;
+        this.overview = overview;
+        this.country = country;
+    }
+
+    public MoviesItems(Cursor cursor){
+        this.id = getColumnInt(cursor, _ID);
+        this.title = getColumnString(cursor, TITLE);
+        this.date = getColumnString(cursor, DATE);
+        this.photo = getColumnString(cursor, PHOTO);
+        this.rating = getColumnString(cursor, RATING);
+        this.overview = getColumnString(cursor, OVERVIEW);
+        this.country = getColumnString(cursor, COUNTRY);
+    }
 
     public String getCountry() {
         return country;

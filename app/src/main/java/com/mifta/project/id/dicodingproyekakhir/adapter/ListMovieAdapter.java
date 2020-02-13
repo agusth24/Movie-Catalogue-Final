@@ -1,5 +1,6 @@
 package com.mifta.project.id.dicodingproyekakhir.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,12 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
 
     private ArrayList<MoviesItems> mData = new ArrayList<>();
     private OnItemClickCallBack onItemClickCallBack;
+    private Context context;
+
+    public ListMovieAdapter(Context context) {
+        this.context = context;
+        mData = new ArrayList<>();
+    }
 
     public ListMovieAdapter() {
 

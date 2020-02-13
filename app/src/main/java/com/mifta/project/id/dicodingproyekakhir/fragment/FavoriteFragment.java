@@ -36,4 +36,6 @@ public class FavoriteFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setElevation(0);
         }
     }
+
+
 }
