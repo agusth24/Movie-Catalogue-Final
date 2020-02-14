@@ -24,4 +24,5 @@
     <string name="remove_favorite">Dihapus dari Favorit</string>
     <string name="fail_remove">Gagal dihapus dari Favorit</string>
     <string name="notif">Pemberitahuan</string>
+    <string name="search">search</string>
 </resources>

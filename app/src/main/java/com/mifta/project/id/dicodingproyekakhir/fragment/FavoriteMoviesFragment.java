@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,20 +28,25 @@ import java.util.ArrayList;
 
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class FavoriteMoviesFragment extends Fragment {
     private RecyclerView rvMovie;
     private ListMovieAdapter adapter;
     private ArrayList<MoviesItems> listMovies;
+    private static final String TAG = "FavoriteMovieFragment";
+    private FragmentManager fragmentManager;
 
     public FavoriteMoviesFragment() {
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FavoriteMoviesFragment favoriteMoviesFragment = new FavoriteMoviesFragment();
+        if (favoriteMoviesFragment != null && favoriteMoviesFragment.isAdded() ){
+            return null;
+        }
         return inflater.inflate(R.layout.fragment_movies, container, false);
     }
 
@@ -51,11 +57,14 @@ public class FavoriteMoviesFragment extends Fragment {
         rvMovie = view.findViewById(R.id.rv_movies);
         listMovies = new ArrayList<>();
         adapter = new ListMovieAdapter(getContext());
+
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
         Cursor cursor = getContext().getContentResolver().query(CONTENT_URI_MOVIE, null, null, null, null);
         listMovies.clear();
         listMovies.addAll(MappingHelper.mapCursorToArrayList(cursor));
@@ -71,7 +80,6 @@ public class FavoriteMoviesFragment extends Fragment {
             }
 
         });
-
     }
 
     private void showSelectedMovie(MoviesItems movie) {
