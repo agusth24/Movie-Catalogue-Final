@@ -28,4 +28,8 @@
     <string name="search_movie_hint">Cari Film</string>
     <string name="search_tv_hint">Cari Acara Tv</string>
     <string name="empty_text">DATA TIDAK ADA</string>
+    <string name="reminder_daily">Pengingat Harian</string>
+    <string name="reminder_daily_desc">Anda akan mendapatkan notifikasi untuk melihat isi dari Aplikasi Katalog Film setiap Pukul 07.00 A.M</string>
+    <string name="reminder_release">Pengingat Terbitan Hari ini</string>
+    <string name="reminder_release_desc">Anda akan mendapatkan notifikasi daftar film yang rilis hari ini setiap pukul 08.00 A.M</string>
 </resources>

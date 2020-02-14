@@ -28,4 +28,8 @@
     <string name="search_movie_hint">Search Movie</string>
     <string name="search_tv_hint">Search Tv Show</string>
     <string name="empty_text">NO DATA</string>
+    <string name="reminder_daily">Daily Reminder</string>
+    <string name="reminder_daily_desc">You will get a notification to view the contents of Movie Catalogue App at 07.00 A.M everyday</string>
+    <string name="reminder_release">Release Today Reminder</string>
+    <string name="reminder_release_desc">You will get a notification of Today Released Movie every 08.00 A.M everyday</string>
 </resources>
