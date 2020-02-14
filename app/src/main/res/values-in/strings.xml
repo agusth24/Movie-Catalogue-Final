@@ -27,4 +27,5 @@
     <string name="search">cari</string>
     <string name="search_movie_hint">Cari Film</string>
     <string name="search_tv_hint">Cari Acara Tv</string>
+    <string name="empty_text">DATA TIDAK ADA</string>
 </resources>

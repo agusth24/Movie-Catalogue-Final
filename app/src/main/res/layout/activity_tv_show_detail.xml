@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -20,7 +21,7 @@
             android:layout_centerVertical="true"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/img_detailtv"
@@ -37,9 +38,9 @@
             android:id="@+id/tv_titleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-black"
             android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
             android:text="@string/title"
             android:textColor="@color/colorAccent"
             android:textSize="30sp"
@@ -52,9 +53,9 @@
             android:id="@+id/tv_overviewTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:gravity="center_horizontal"
-            android:layout_marginTop="15dp"
             android:text="@string/set"
             android:textColor="@color/colorAccent"
             android:textSize="20sp"

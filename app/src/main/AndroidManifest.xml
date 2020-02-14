@@ -3,8 +3,13 @@
     package="com.mifta.project.id.dicodingproyekakhir">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <permission android:name="com.mifta.project.id.dicodingproyekakhir.READ_DATABASE" android:protectionLevel="normal"/>
-    <permission android:name="com.mifta.project.id.dicodingproyekakhir.WRITE_DATABASE" android:protectionLevel="normal"/>
+
+    <permission
+        android:name="com.mifta.project.id.dicodingproyekakhir.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.mifta.project.id.dicodingproyekakhir.WRITE_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:allowBackup="true"
@@ -13,15 +18,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver android:name=".widget.ImageBannerWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/image_banner_widget_info" />
+        </receiver>
+
         <provider
             android:name=".provider.FavoriteProvider"
             android:authorities="com.mifta.project.id.dicodingproyekakhir"
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.mifta.project.id.dicodingproyekakhir.READ_DATABASE"
-            android:writePermission="com.mifta.project.id.dicodingproyekakhir.WRITE_DATABASE">
-
-        </provider>
+            android:writePermission="com.mifta.project.id.dicodingproyekakhir.WRITE_DATABASE"></provider>
 
         <activity android:name=".activity.ReminderActivity" />
         <activity android:name=".activity.TvShowDetailActivity" />
@@ -35,6 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.mifta.project.id.dicodingproyekakhir.widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>
