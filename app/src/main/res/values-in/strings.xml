@@ -24,5 +24,7 @@
     <string name="remove_favorite">Dihapus dari Favorit</string>
     <string name="fail_remove">Gagal dihapus dari Favorit</string>
     <string name="notif">Pemberitahuan</string>
-    <string name="search">search</string>
+    <string name="search">cari</string>
+    <string name="search_movie_hint">Cari Film</string>
+    <string name="search_tv_hint">Cari Acara Tv</string>
 </resources>

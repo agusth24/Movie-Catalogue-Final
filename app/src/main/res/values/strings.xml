@@ -23,7 +23,8 @@
     <string name="fail_remove">Failed to remove from favorite</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notif">notification</string>
     <string name="search">search</string>
+    <string name="search_movie_hint">Search Movie</string>
+    <string name="search_tv_hint">Search Tv Show</string>
 </resources>

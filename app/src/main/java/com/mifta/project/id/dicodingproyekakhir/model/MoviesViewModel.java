@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MoviesViewModel  extends ViewModel {
+public class MoviesViewModel extends ViewModel {
 
     private static final String API_KEY = BuildConfig.MY_TMDB_API_KEY;
     private MutableLiveData<ArrayList<MoviesItems>> listMovies = new MutableLiveData<>();

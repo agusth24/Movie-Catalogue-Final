@@ -59,7 +59,7 @@ public class MoviesItems implements Parcelable {
         this.country = country;
     }
 
-    public MoviesItems(Cursor cursor){
+    public MoviesItems(Cursor cursor) {
         this.id = getColumnInt(cursor, _ID);
         this.title = getColumnString(cursor, TITLE);
         this.date = getColumnString(cursor, DATE);

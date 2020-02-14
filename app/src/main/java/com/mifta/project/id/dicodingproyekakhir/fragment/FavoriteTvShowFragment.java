@@ -3,6 +3,13 @@ package com.mifta.project.id.dicodingproyekakhir.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,11 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.mifta.project.id.dicodingproyekakhir.R;
+import com.mifta.project.id.dicodingproyekakhir.activity.ReminderActivity;
 import com.mifta.project.id.dicodingproyekakhir.activity.TvShowDetailActivity;
 import com.mifta.project.id.dicodingproyekakhir.adapter.CardViewTvShowAdapter;
 import com.mifta.project.id.dicodingproyekakhir.database.TvShowHelper;
@@ -36,6 +40,7 @@ public class FavoriteTvShowFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_favorite_tv_show, container, false);
     }
 
@@ -48,6 +53,25 @@ public class FavoriteTvShowFragment extends Fragment {
         tvShowHelper = TvShowHelper.getInstance(getContext());
         listMovies = new ArrayList<>();
         cardViewTvShowAdapter = new CardViewTvShowAdapter();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.main_menu, menu);
+        menu.findItem(R.id.search).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.setting) {
+            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(intent);
+        } else if (item.getItemId() == R.id.notification) {
+            Intent intent = new Intent(getActivity(), ReminderActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

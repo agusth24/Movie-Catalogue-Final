@@ -12,10 +12,10 @@ import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 import java.util.ArrayList;
 
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TABLE_TV_SHOW;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns._ID;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.OVERVIEW;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.PHOTO;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.TITLE;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns._ID;
 
 public class TvShowHelper {
     private static final String DATABASE_TABLE = TABLE_TV_SHOW;

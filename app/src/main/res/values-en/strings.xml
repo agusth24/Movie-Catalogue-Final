@@ -25,4 +25,6 @@
     <string name="fail_remove">Failed to remove from favorite</string>
     <string name="notif">notification</string>
     <string name="search">search</string>
+    <string name="search_movie_hint">Search Movie</string>
+    <string name="search_tv_hint">Search Tv Show</string>
 </resources>
