@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Katalog Film</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="tab_movies">Film</string>
     <string name="tab_tv_show">Acara TV</string>
     <string name="title_movies">Film</string>
@@ -30,6 +29,11 @@
     <string name="empty_text">DATA TIDAK ADA</string>
     <string name="reminder_daily">Pengingat Harian</string>
     <string name="reminder_daily_desc">Anda akan mendapatkan notifikasi untuk melihat isi dari Aplikasi Katalog Film setiap Pukul 07.00 A.M</string>
-    <string name="reminder_release">Pengingat Terbitan Hari ini</string>
+    <string name="reminder_release">Pengingat Terbitan Hari Ini</string>
     <string name="reminder_release_desc">Anda akan mendapatkan notifikasi daftar film yang rilis hari ini setiap pukul 08.00 A.M</string>
+    <string name="title_daily">Pengingat Harian</string>
+    <string name="daily_message">Periksa koleksi Katalog Film sekarang</string>
+    <string name="title_release">Pengigat Terbitan Hari Ini</string>
+    <string name="release_message">Periksa Film yang terbik hari ini sekarang juga</string>
+    <string name="release_empty">Tidak ada Film yang terbit hari ini</string>
 </resources>

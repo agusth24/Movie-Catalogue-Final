@@ -32,10 +32,10 @@ import java.util.ArrayList;
 
 public class TvShowFragment extends Fragment {
 
+    private static CardViewTvShowAdapter cardViewTvShowAdapter;
     private RecyclerView rvTvShow;
     private ArrayList<MoviesItems> list = new ArrayList<>();
     private ProgressBar progressBar;
-    private static CardViewTvShowAdapter cardViewTvShowAdapter;
 
 
     public TvShowFragment() {

@@ -22,9 +22,8 @@ public class MoviesDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     ProgressBar progressBar;
     MoviesItems movie = new MoviesItems();
-    private MoviesHelper moviesHelper;
     int zero = 0;
-
+    private MoviesHelper moviesHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

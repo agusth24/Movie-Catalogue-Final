@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class CardViewTvShowAdapter extends RecyclerView.Adapter<CardViewTvShowAdapter.CardViewViewHolder> {
 
     private ArrayList<MoviesItems> listMovie = new ArrayList<>();
+    private CardViewTvShowAdapter.OnItemClickCallback onItemClickCallback;
 
     public CardViewTvShowAdapter(ArrayList<MoviesItems> list) {
         this.listMovie = list;
@@ -33,8 +34,6 @@ public class CardViewTvShowAdapter extends RecyclerView.Adapter<CardViewTvShowAd
         listMovie.addAll(items);
         notifyDataSetChanged();
     }
-
-    private CardViewTvShowAdapter.OnItemClickCallback onItemClickCallback;
 
     public void setOnItemClickCallback(CardViewTvShowAdapter.OnItemClickCallback onItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback;
@@ -73,6 +72,10 @@ public class CardViewTvShowAdapter extends RecyclerView.Adapter<CardViewTvShowAd
         return listMovie.size();
     }
 
+    public interface OnItemClickCallback {
+        void onItemClicked(MoviesItems data);
+    }
+
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView overview;
@@ -84,9 +87,5 @@ public class CardViewTvShowAdapter extends RecyclerView.Adapter<CardViewTvShowAd
             overview = itemView.findViewById(R.id.tv_item_overview);
             imgPhoto = itemView.findViewById(R.id.img_item_photo);
         }
-    }
-
-    public interface OnItemClickCallback {
-        void onItemClicked(MoviesItems data);
     }
 }

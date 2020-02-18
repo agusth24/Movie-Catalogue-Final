@@ -32,8 +32,8 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
 
     }
 
-    public interface OnItemClickCallBack {
-        void onItemClicked(MoviesItems data);
+    public ListMovieAdapter(ArrayList<MoviesItems> list) {
+        this.mData = list;
     }
 
     public void setOnItemClickCallBack(OnItemClickCallBack onItemClickCallBack) {
@@ -44,10 +44,6 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         mData.clear();
         mData.addAll(items);
         notifyDataSetChanged();
-    }
-
-    public ListMovieAdapter(ArrayList<MoviesItems> list) {
-        this.mData = list;
     }
 
     @NonNull
@@ -83,6 +79,10 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    public interface OnItemClickCallBack {
+        void onItemClicked(MoviesItems data);
     }
 
     public class ListViewHolder extends RecyclerView.ViewHolder {

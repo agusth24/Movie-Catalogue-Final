@@ -40,8 +40,10 @@
         android:id="@+id/sw_daily"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/SwitchCompatTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:checked="false" />
 
     <ImageView
         android:id="@+id/img_release"
@@ -61,8 +63,7 @@
         android:layout_marginTop="10dp"
         android:text="@string/reminder_release"
         app:layout_constraintStart_toEndOf="@+id/img_release"
-        app:layout_constraintTop_toBottomOf="@id/desc_daily"
-        />
+        app:layout_constraintTop_toBottomOf="@id/desc_daily" />
 
     <TextView
         android:id="@+id/desc_release"
@@ -80,8 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:theme="@style/SwitchCompatTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/desc_daily"
-        />
+        tools:checked="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

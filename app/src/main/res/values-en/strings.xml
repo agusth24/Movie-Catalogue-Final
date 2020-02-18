@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">Movie Catalogue</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="tab_movies">Movies</string>
     <string name="tab_tv_show">Tv Show</string>
     <string name="title_movies">Movies</string>
@@ -32,4 +31,9 @@
     <string name="reminder_daily_desc">You will get a notification to view the contents of Movie Catalogue App at 07.00 A.M everyday</string>
     <string name="reminder_release">Release Today Reminder</string>
     <string name="reminder_release_desc">You will get a notification of Today Released Movie every 08.00 A.M everyday</string>
+    <string name="title_daily">Daily Reminder</string>
+    <string name="daily_message">Check the collection of Movie Catalogue now.</string>
+    <string name="title_release">Released Today Reminder</string>
+    <string name="release_message">Check the released today movies now.</string>
+    <string name="release_empty">No Movie Release Today</string>
 </resources>

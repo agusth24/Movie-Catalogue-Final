@@ -6,15 +6,14 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
-import android.os.Handler;
 
 import com.mifta.project.id.dicodingproyekakhir.database.MoviesHelper;
 import com.mifta.project.id.dicodingproyekakhir.database.TvShowHelper;
 
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.AUTHORITY;
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TABLE_MOVIES;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TABLE_TV_SHOW;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_TV;
 
 public class FavoriteProvider extends ContentProvider {
@@ -22,10 +21,8 @@ public class FavoriteProvider extends ContentProvider {
     private static final int MOVIE_ID = 2;
     private static final int TV = 3;
     private static final int TV_ID = 4;
-    private MoviesHelper moviesHelper;
-    private TvShowHelper tvShowHelper;
-
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sUriMatcher.addURI(AUTHORITY, TABLE_MOVIES, MOVIE);
         sUriMatcher.addURI(AUTHORITY,
@@ -35,6 +32,12 @@ public class FavoriteProvider extends ContentProvider {
         sUriMatcher.addURI(AUTHORITY,
                 TABLE_TV_SHOW + "/#",
                 TV_ID);
+    }
+
+    private MoviesHelper moviesHelper;
+    private TvShowHelper tvShowHelper;
+
+    public FavoriteProvider() {
     }
 
     @Override
@@ -95,7 +98,7 @@ public class FavoriteProvider extends ContentProvider {
             default:
                 throw new SQLException("FailedAdded " + uri);
         }
-        
+
         return uri_;
     }
 
@@ -108,7 +111,7 @@ public class FavoriteProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         int drop;
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
                 drop = moviesHelper.deleteProvider(uri.getLastPathSegment());
                 getContext().getContentResolver().notifyChange(CONTENT_URI_MOVIE, null);
@@ -122,9 +125,6 @@ public class FavoriteProvider extends ContentProvider {
                 break;
         }
         return drop;
-    }
-
-    public FavoriteProvider() {
     }
 
 }

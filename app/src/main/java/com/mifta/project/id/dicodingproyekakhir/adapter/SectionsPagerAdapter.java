@@ -15,17 +15,16 @@ import com.mifta.project.id.dicodingproyekakhir.fragment.FavoriteTvShowFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private final Context mContext;
-
-    public SectionsPagerAdapter(Context context, FragmentManager fm) {
-        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        mContext = context;
-    }
-
     @StringRes
     private final int[] TAB_TITLES = new int[]{
             R.string.tab_movies,
             R.string.tab_tv_show,
     };
+
+    public SectionsPagerAdapter(Context context, FragmentManager fm) {
+        super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        mContext = context;
+    }
 
     @Nullable
     @Override

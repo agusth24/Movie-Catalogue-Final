@@ -22,9 +22,8 @@ public class TvShowDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     ProgressBar progressBar;
     MoviesItems movie = new MoviesItems();
-    private TvShowHelper tvShowHelper;
     int zero = 0;
-
+    private TvShowHelper tvShowHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

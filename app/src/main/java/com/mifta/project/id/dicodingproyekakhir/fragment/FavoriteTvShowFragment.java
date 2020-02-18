@@ -27,10 +27,9 @@ import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 import java.util.ArrayList;
 
 public class FavoriteTvShowFragment extends Fragment {
+    private static CardViewTvShowAdapter cardViewTvShowAdapter;
     private RecyclerView rvTvShow;
     private TvShowHelper tvShowHelper;
-
-    private static CardViewTvShowAdapter cardViewTvShowAdapter;
     private ArrayList<MoviesItems> listMovies;
 
     public FavoriteTvShowFragment() {

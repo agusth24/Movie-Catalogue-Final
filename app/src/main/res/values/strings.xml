@@ -16,13 +16,11 @@
     <string name="setting">setting</string>
     <string name="now_showing">NOW SHOWING</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="add_favorite">Added to favorite</string>
     <string name="fail_favorite">Failed to add to favorite</string>
     <string name="remove_favorite">Removed from favorite</string>
     <string name="fail_remove">Failed to remove from favorite</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="notif">notification</string>
     <string name="search">search</string>
     <string name="search_movie_hint">Search Movie</string>
@@ -32,4 +30,9 @@
     <string name="reminder_daily_desc">You will get a notification to view the contents of Movie Catalogue App at 07.00 A.M everyday</string>
     <string name="reminder_release">Release Today Reminder</string>
     <string name="reminder_release_desc">You will get a notification of Today Released Movie every 08.00 A.M everyday</string>
+    <string name="title_daily">Daily Reminder</string>
+    <string name="daily_message">Check the collection of Movie Catalogue now.</string>
+    <string name="title_release">Released Today Reminder</string>
+    <string name="release_message">Check the released today movies now.</string>
+    <string name="release_empty">No Movie Release Today</string>
 </resources>

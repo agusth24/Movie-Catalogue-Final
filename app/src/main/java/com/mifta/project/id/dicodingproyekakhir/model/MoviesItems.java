@@ -15,6 +15,17 @@ import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.getColumnString;
 
 public class MoviesItems implements Parcelable {
+    public static final Creator<MoviesItems> CREATOR = new Creator<MoviesItems>() {
+        @Override
+        public MoviesItems createFromParcel(Parcel in) {
+            return new MoviesItems(in);
+        }
+
+        @Override
+        public MoviesItems[] newArray(int size) {
+            return new MoviesItems[size];
+        }
+    };
     private int id;
     private String photo;
     private String title;
@@ -33,21 +44,9 @@ public class MoviesItems implements Parcelable {
         country = in.readString();
     }
 
+
     public MoviesItems() {
     }
-
-
-    public static final Creator<MoviesItems> CREATOR = new Creator<MoviesItems>() {
-        @Override
-        public MoviesItems createFromParcel(Parcel in) {
-            return new MoviesItems(in);
-        }
-
-        @Override
-        public MoviesItems[] newArray(int size) {
-            return new MoviesItems[size];
-        }
-    };
 
     public MoviesItems(int id, String title, String date, String photo, String rating, String overview, String country) {
         this.id = id;
