@@ -101,13 +101,4 @@ public class FavoriteTvShowFragment extends Fragment {
         moveWithObjectActivity.putExtra(TvShowDetailActivity.EXTRA_MOVIE, movie);
         startActivity(moveWithObjectActivity);
     }
-
-    public static class DataObserver extends ContentObserver {
-        final Context context;
-
-        public DataObserver(Handler handler, Context context) {
-            super(handler);
-            this.context = context;
-        }
-    }
 }
