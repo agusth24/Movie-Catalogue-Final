@@ -126,5 +126,4 @@ public class FavoriteProvider extends ContentProvider {
         }
         return drop;
     }
-
 }

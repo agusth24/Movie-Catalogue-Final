@@ -85,7 +85,7 @@ public class MoviesHelper {
     }
 
     public Cursor query() {
-        return database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " ASC");
+        return database.query(DATABASE_TABLE, null, null, null, null, null, _ID + " ASC", null);
     }
 
 

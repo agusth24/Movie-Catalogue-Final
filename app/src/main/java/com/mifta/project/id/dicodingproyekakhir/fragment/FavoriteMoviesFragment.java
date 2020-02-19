@@ -101,5 +101,4 @@ public class FavoriteMoviesFragment extends Fragment {
         intent.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
     }
-
 }

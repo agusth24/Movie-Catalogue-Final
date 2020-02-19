@@ -46,6 +46,10 @@ public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.List
         notifyDataSetChanged();
     }
 
+    public ArrayList<MoviesItems> getMoviesItem() {
+        return mData;
+    }
+
     @NonNull
     @Override
     public ListMovieAdapter.ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

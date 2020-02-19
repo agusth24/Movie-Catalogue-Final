@@ -1,8 +1,11 @@
 package com.mifta.project.id.dicodingproyekakhir.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -97,5 +100,14 @@ public class FavoriteTvShowFragment extends Fragment {
         Intent moveWithObjectActivity = new Intent(getContext(), TvShowDetailActivity.class);
         moveWithObjectActivity.putExtra(TvShowDetailActivity.EXTRA_MOVIE, movie);
         startActivity(moveWithObjectActivity);
+    }
+
+    public static class DataObserver extends ContentObserver {
+        final Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
     }
 }
