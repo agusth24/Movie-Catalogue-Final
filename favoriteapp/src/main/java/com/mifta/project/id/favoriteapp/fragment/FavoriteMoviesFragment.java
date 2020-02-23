@@ -1,4 +1,5 @@
-package com.mifta.project.id.dicodingproyekakhir.fragment;
+package com.mifta.project.id.favoriteapp.fragment;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.provider.Settings;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -24,17 +21,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mifta.project.id.dicodingproyekakhir.R;
-import com.mifta.project.id.dicodingproyekakhir.activity.MoviesDetailActivity;
-import com.mifta.project.id.dicodingproyekakhir.activity.ReminderActivity;
-import com.mifta.project.id.dicodingproyekakhir.adapter.ListMovieAdapter;
-import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
+import com.mifta.project.id.favoriteapp.R;
+import com.mifta.project.id.favoriteapp.activity.MoviesDetailActivity;
+import com.mifta.project.id.favoriteapp.adapter.ListMovieAdapter;
+import com.mifta.project.id.favoriteapp.model.MoviesItems;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
-import static com.mifta.project.id.dicodingproyekakhir.database.MappingHelper.mapCursorToArrayList;
+import static com.mifta.project.id.favoriteapp.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
+import static com.mifta.project.id.favoriteapp.database.MappingHelper.mapCursorToArrayList;
+
 
 interface LoadMovieCallback {
     void preExecute();
@@ -50,10 +47,10 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
     public FavoriteMoviesFragment() {
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_favorite_movies, container, false);
     }
 
@@ -89,24 +86,6 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.search).setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.setting) {
-            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.notification) {
-            Intent intent = new Intent(getActivity(), ReminderActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

@@ -1,19 +1,15 @@
-package com.mifta.project.id.dicodingproyekakhir.fragment;
+package com.mifta.project.id.favoriteapp.fragment;
+
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.provider.Settings;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -24,55 +20,59 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mifta.project.id.dicodingproyekakhir.R;
-import com.mifta.project.id.dicodingproyekakhir.activity.MoviesDetailActivity;
-import com.mifta.project.id.dicodingproyekakhir.activity.ReminderActivity;
-import com.mifta.project.id.dicodingproyekakhir.adapter.ListMovieAdapter;
-import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
+import com.mifta.project.id.favoriteapp.R;
+import com.mifta.project.id.favoriteapp.activity.TvShowDetailActivity;
+import com.mifta.project.id.favoriteapp.adapter.CardViewTvShowAdapter;
+import com.mifta.project.id.favoriteapp.model.MoviesItems;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
-import static com.mifta.project.id.dicodingproyekakhir.database.MappingHelper.mapCursorToArrayList;
+import static com.mifta.project.id.favoriteapp.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
+import static com.mifta.project.id.favoriteapp.database.DatabaseContract.TableColumns.CONTENT_URI_TV;
+import static com.mifta.project.id.favoriteapp.database.MappingHelper.mapCursorTvToArrayList;
 
-interface LoadMovieCallback {
+interface LoadTvCallback {
     void preExecute();
 
     void postExecute(Cursor cursor);
 }
 
-public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallback {
+public class FavoriteTvShowFragment extends Fragment implements LoadTvCallback {
     private static final String EXTRA_STATE_MOVIE = "extra_state_movie";
-    private RecyclerView rvMovie;
-    private ListMovieAdapter adapter;
+    private CardViewTvShowAdapter adapter;
+    private RecyclerView rvTvShow;
 
-    public FavoriteMoviesFragment() {
+    public FavoriteTvShowFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_favorite_movies, container, false);
+        return inflater.inflate(R.layout.fragment_favorite_tv_show, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvMovie = view.findViewById(R.id.rv_movies);
-        adapter = new ListMovieAdapter(getContext());
-        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvTvShow = view.findViewById(R.id.rv_tvshow);
+        adapter = new CardViewTvShowAdapter(getContext());
+
+        rvTvShow.setLayoutManager(new LinearLayoutManager(getActivity()));
         HandlerThread handlerThread = new HandlerThread("DataObserver");
         handlerThread.start();
+
         Handler handler = new Handler(handlerThread.getLooper());
-        DataObserver favMovieObserver = new DataObserver(handler, getContext());
+        FavoriteTvShowFragment.DataObserver favTvObserver = new FavoriteTvShowFragment.DataObserver(handler, getContext());
+
         if (getActivity() != null) {
-            getActivity().getContentResolver().registerContentObserver(CONTENT_URI_MOVIE, true, favMovieObserver);
+            getActivity().getContentResolver().registerContentObserver(CONTENT_URI_MOVIE, true, favTvObserver);
         }
-        rvMovie.setAdapter(adapter);
-        adapter.setOnItemClickCallBack(new ListMovieAdapter.OnItemClickCallBack() {
+
+        rvTvShow.setAdapter(adapter);
+        adapter.setOnItemClickCallback(new CardViewTvShowAdapter.OnItemClickCallback() {
             @Override
             public void onItemClicked(MoviesItems data) {
                 showSelectedMovie(data);
@@ -80,7 +80,7 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
         });
 
         if (savedInstanceState == null) {
-            new LoadMovieAsync(getContext(), this).execute();
+            new FavoriteTvShowFragment.LoadTvAsync(getContext(), this).execute();
         } else {
             ArrayList<MoviesItems> moviesItems = savedInstanceState.getParcelableArrayList(EXTRA_STATE_MOVIE);
             if (moviesItems != null) {
@@ -90,42 +90,21 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.search).setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.setting) {
-            Intent intent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(intent);
-        } else if (item.getItemId() == R.id.notification) {
-            Intent intent = new Intent(getActivity(), ReminderActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelableArrayList(EXTRA_STATE_MOVIE, adapter.getMoviesItem());
     }
 
     private void showSelectedMovie(MoviesItems movie) {
-        Intent intent = new Intent(getContext(), MoviesDetailActivity.class);
-        Uri uri = Uri.parse(CONTENT_URI_MOVIE + "/" + movie.getId());
-        intent.setData(uri);
-        intent.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
-        startActivity(intent);
+        Intent moveWithObjectActivity = new Intent(getContext(), TvShowDetailActivity.class);
+        moveWithObjectActivity.putExtra(TvShowDetailActivity.EXTRA_MOVIE, movie);
+        startActivity(moveWithObjectActivity);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        new LoadMovieAsync(getContext(), this).execute();
+        new FavoriteTvShowFragment.LoadTvAsync(getContext(), this).execute();
     }
 
     @Override
@@ -142,7 +121,7 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
 
     @Override
     public void postExecute(Cursor cursor) {
-        ArrayList<MoviesItems> moviesItems = mapCursorToArrayList(cursor);
+        ArrayList<MoviesItems> moviesItems = mapCursorTvToArrayList(cursor);
         if (moviesItems.size() > 0) {
             adapter.setData(moviesItems);
         } else {
@@ -157,18 +136,13 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
             super(handler);
             this.context = context;
         }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            super.onChange(selfChange);
-        }
     }
 
-    private static class LoadMovieAsync extends AsyncTask<Void, Void, Cursor> {
+    private static class LoadTvAsync extends AsyncTask<Void, Void, Cursor> {
         private final WeakReference<Context> weakContext;
-        private final WeakReference<LoadMovieCallback> weakCallback;
+        private final WeakReference<LoadTvCallback> weakCallback;
 
-        private LoadMovieAsync(Context context, LoadMovieCallback callback) {
+        private LoadTvAsync(Context context, LoadTvCallback callback) {
             weakContext = new WeakReference<>(context);
             weakCallback = new WeakReference<>(callback);
         }
@@ -188,7 +162,7 @@ public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallbac
         @Override
         protected Cursor doInBackground(Void... voids) {
             Context context = weakContext.get();
-            return context.getContentResolver().query(CONTENT_URI_MOVIE, null, null, null, null);
+            return context.getContentResolver().query(CONTENT_URI_TV, null, null, null, null);
         }
     }
 }

@@ -46,11 +46,18 @@
                 android:resource="@xml/image_banner_widget_info" />
         </receiver>
 
-        <activity android:name=".activity.ReminderActivity" />
-        <activity android:name=".activity.TvShowDetailActivity" />
-        <activity android:name=".activity.MoviesDetailActivity" />
+        <activity
+            android:name=".activity.ReminderActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.TvShowDetailActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".activity.MoviesDetailActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".activity.MainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
