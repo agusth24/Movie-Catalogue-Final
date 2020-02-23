@@ -68,6 +68,13 @@ public class MoviesItems implements Parcelable {
         this.country = getColumnString(cursor, COUNTRY);
     }
 
+    public MoviesItems(int id, String title, String photo, String overview) {
+        this.id = id;
+        this.title = title;
+        this.photo = photo;
+        this.overview = overview;
+    }
+
     public String getCountry() {
         return country;
     }

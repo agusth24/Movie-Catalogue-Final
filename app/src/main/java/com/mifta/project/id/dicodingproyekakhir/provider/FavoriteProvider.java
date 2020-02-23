@@ -6,9 +6,12 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.net.Uri;
+import android.os.Handler;
 
 import com.mifta.project.id.dicodingproyekakhir.database.MoviesHelper;
 import com.mifta.project.id.dicodingproyekakhir.database.TvShowHelper;
+import com.mifta.project.id.dicodingproyekakhir.fragment.FavoriteMoviesFragment;
+import com.mifta.project.id.dicodingproyekakhir.fragment.FavoriteTvShowFragment;
 
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.AUTHORITY;
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TABLE_MOVIES;
@@ -22,6 +25,8 @@ public class FavoriteProvider extends ContentProvider {
     private static final int TV = 3;
     private static final int TV_ID = 4;
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    private MoviesHelper moviesHelper;
+    private TvShowHelper tvShowHelper;
 
     static {
         sUriMatcher.addURI(AUTHORITY, TABLE_MOVIES, MOVIE);
@@ -34,19 +39,14 @@ public class FavoriteProvider extends ContentProvider {
                 TV_ID);
     }
 
-    private MoviesHelper moviesHelper;
-    private TvShowHelper tvShowHelper;
-
     public FavoriteProvider() {
     }
 
     @Override
     public boolean onCreate() {
         moviesHelper = MoviesHelper.getInstance(getContext());
-        moviesHelper.open();
-
         tvShowHelper = TvShowHelper.getInstance(getContext());
-        tvShowHelper.open();
+
         return true;
     }
 
@@ -54,6 +54,8 @@ public class FavoriteProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Cursor cursor;
+        tvShowHelper.open();
+        moviesHelper.open();
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 cursor = moviesHelper.query();
@@ -84,16 +86,22 @@ public class FavoriteProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
         Uri uri_;
         long added;
+        tvShowHelper.open();
+        moviesHelper.open();
         switch (sUriMatcher.match(uri)) {
             case MOVIE:
                 added = moviesHelper.insertProvider(values);
                 uri_ = Uri.parse(CONTENT_URI_MOVIE + "/" + added);
-                getContext().getContentResolver().notifyChange(CONTENT_URI_MOVIE, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(CONTENT_URI_MOVIE, new FavoriteMoviesFragment.DataObserver(new Handler(), getContext()));
+                }
                 break;
             case TV:
                 added = tvShowHelper.insertProvider(values);
                 uri_ = Uri.parse(CONTENT_URI_TV + "/" + added);
-                getContext().getContentResolver().notifyChange(CONTENT_URI_TV, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(CONTENT_URI_TV, new FavoriteTvShowFragment.DataObserver(new Handler(), getContext()));
+                }
                 break;
             default:
                 throw new SQLException("FailedAdded " + uri);
@@ -110,15 +118,21 @@ public class FavoriteProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+        tvShowHelper.open();
+        moviesHelper.open();
         int drop;
         switch (sUriMatcher.match(uri)) {
             case MOVIE_ID:
                 drop = moviesHelper.deleteProvider(uri.getLastPathSegment());
-                getContext().getContentResolver().notifyChange(CONTENT_URI_MOVIE, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(CONTENT_URI_MOVIE, new FavoriteMoviesFragment.DataObserver(new Handler(), getContext()));
+                }
                 break;
             case TV_ID:
                 drop = tvShowHelper.deleteProvider(uri.getLastPathSegment());
-                getContext().getContentResolver().notifyChange(CONTENT_URI_TV, null);
+                if (getContext() != null) {
+                    getContext().getContentResolver().notifyChange(CONTENT_URI_TV, new FavoriteTvShowFragment.DataObserver(new Handler(), getContext()));
+                }
                 break;
             default:
                 drop = 0;

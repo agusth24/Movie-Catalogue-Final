@@ -1,10 +1,14 @@
 package com.mifta.project.id.dicodingproyekakhir.fragment;
 
-
+import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,17 +28,24 @@ import com.mifta.project.id.dicodingproyekakhir.R;
 import com.mifta.project.id.dicodingproyekakhir.activity.MoviesDetailActivity;
 import com.mifta.project.id.dicodingproyekakhir.activity.ReminderActivity;
 import com.mifta.project.id.dicodingproyekakhir.adapter.ListMovieAdapter;
-import com.mifta.project.id.dicodingproyekakhir.database.MappingHelper;
 import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_MOVIE;
+import static com.mifta.project.id.dicodingproyekakhir.database.MappingHelper.mapCursorToArrayList;
 
-public class FavoriteMoviesFragment extends Fragment {
+interface LoadMovieCallback {
+    void preExecute();
+
+    void postExecute(Cursor cursor);
+}
+
+public class FavoriteMoviesFragment extends Fragment implements LoadMovieCallback {
+    private static final String EXTRA_STATE_MOVIE = "extra_state_movie";
     private RecyclerView rvMovie;
     private ListMovieAdapter adapter;
-    private ArrayList<MoviesItems> listMovies;
 
     public FavoriteMoviesFragment() {
     }
@@ -50,9 +62,31 @@ public class FavoriteMoviesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvMovie = view.findViewById(R.id.rv_movies);
-        listMovies = new ArrayList<>();
         adapter = new ListMovieAdapter(getContext());
+        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+        HandlerThread handlerThread = new HandlerThread("DataObserver");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+        DataObserver favMovieObserver = new DataObserver(handler, getContext());
+        if (getActivity() != null) {
+            getActivity().getContentResolver().registerContentObserver(CONTENT_URI_MOVIE, true, favMovieObserver);
+        }
+        rvMovie.setAdapter(adapter);
+        adapter.setOnItemClickCallBack(new ListMovieAdapter.OnItemClickCallBack() {
+            @Override
+            public void onItemClicked(MoviesItems data) {
+                showSelectedMovie(data);
+            }
+        });
 
+        if (savedInstanceState == null) {
+            new LoadMovieAsync(getContext(), this).execute();
+        } else {
+            ArrayList<MoviesItems> moviesItems = savedInstanceState.getParcelableArrayList(EXTRA_STATE_MOVIE);
+            if (moviesItems != null) {
+                adapter.setData(moviesItems);
+            }
+        }
     }
 
     @Override
@@ -75,23 +109,9 @@ public class FavoriteMoviesFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        Cursor cursor = getContext().getContentResolver().query(CONTENT_URI_MOVIE, null, null, null, null);
-        listMovies.clear();
-        listMovies.addAll(MappingHelper.mapCursorToArrayList(cursor));
-        adapter.setData(listMovies);
-        adapter.notifyDataSetChanged();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvMovie.setLayoutManager(layoutManager);
-        rvMovie.setAdapter(adapter);
-        adapter.setOnItemClickCallBack(new ListMovieAdapter.OnItemClickCallBack() {
-            @Override
-            public void onItemClicked(MoviesItems data) {
-                showSelectedMovie(data);
-            }
-
-        });
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(EXTRA_STATE_MOVIE, adapter.getMoviesItem());
     }
 
     private void showSelectedMovie(MoviesItems movie) {
@@ -100,5 +120,75 @@ public class FavoriteMoviesFragment extends Fragment {
         intent.setData(uri);
         intent.putExtra(MoviesDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        new LoadMovieAsync(getContext(), this).execute();
+    }
+
+    @Override
+    public void preExecute() {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    public void postExecute(Cursor cursor) {
+        ArrayList<MoviesItems> moviesItems = mapCursorToArrayList(cursor);
+        if (moviesItems.size() > 0) {
+            adapter.setData(moviesItems);
+        } else {
+            Toast.makeText(getActivity(), "Data tidak ada", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static class DataObserver extends ContentObserver {
+        final Context context;
+
+        public DataObserver(Handler handler, Context context) {
+            super(handler);
+            this.context = context;
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+        }
+    }
+
+    private static class LoadMovieAsync extends AsyncTask<Void, Void, Cursor> {
+        private final WeakReference<Context> weakContext;
+        private final WeakReference<LoadMovieCallback> weakCallback;
+
+        private LoadMovieAsync(Context context, LoadMovieCallback callback) {
+            weakContext = new WeakReference<>(context);
+            weakCallback = new WeakReference<>(callback);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            weakCallback.get().preExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            weakCallback.get().postExecute(cursor);
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... voids) {
+            Context context = weakContext.get();
+            return context.getContentResolver().query(CONTENT_URI_MOVIE, null, null, null, null);
+        }
     }
 }

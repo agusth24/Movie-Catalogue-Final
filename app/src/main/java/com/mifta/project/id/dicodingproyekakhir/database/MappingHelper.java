@@ -31,4 +31,18 @@ public class MappingHelper {
         }
         return itemList;
     }
+
+    public static ArrayList<MoviesItems> mapCursorTvToArrayList(Cursor itemCursor) {
+        ArrayList<MoviesItems> itemList = new ArrayList<>();
+
+        while (itemCursor.moveToNext()) {
+            int id = itemCursor.getInt(itemCursor.getColumnIndexOrThrow(_ID));
+            String title = itemCursor.getString(itemCursor.getColumnIndexOrThrow(TITLE));
+            String photo = itemCursor.getString(itemCursor.getColumnIndexOrThrow(PHOTO));
+            String overview = itemCursor.getString(itemCursor.getColumnIndexOrThrow(OVERVIEW));
+
+            itemList.add(new MoviesItems(id, title, photo, overview));
+        }
+        return itemList;
+    }
 }

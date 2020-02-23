@@ -1,5 +1,6 @@
 package com.mifta.project.id.dicodingproyekakhir.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,19 +21,28 @@ public class CardViewTvShowAdapter extends RecyclerView.Adapter<CardViewTvShowAd
 
     private ArrayList<MoviesItems> listMovie = new ArrayList<>();
     private CardViewTvShowAdapter.OnItemClickCallback onItemClickCallback;
+    private Context context;
 
     public CardViewTvShowAdapter(ArrayList<MoviesItems> list) {
         this.listMovie = list;
     }
 
     public CardViewTvShowAdapter() {
+    }
 
+    public CardViewTvShowAdapter(Context context) {
+        this.context = context;
+        listMovie = new ArrayList<>();
     }
 
     public void setData(ArrayList<MoviesItems> items) {
         listMovie.clear();
         listMovie.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public ArrayList<MoviesItems> getMoviesItem() {
+        return listMovie;
     }
 
     public void setOnItemClickCallback(CardViewTvShowAdapter.OnItemClickCallback onItemClickCallback) {
