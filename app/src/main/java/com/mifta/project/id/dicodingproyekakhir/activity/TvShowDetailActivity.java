@@ -1,5 +1,7 @@
 package com.mifta.project.id.dicodingproyekakhir.activity;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,24 +19,31 @@ import com.mifta.project.id.dicodingproyekakhir.R;
 import com.mifta.project.id.dicodingproyekakhir.database.TvShowHelper;
 import com.mifta.project.id.dicodingproyekakhir.model.MoviesItems;
 
-public class TvShowDetailActivity extends AppCompatActivity {
+import static android.provider.BaseColumns._ID;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.CONTENT_URI_TV;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.OVERVIEW;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.PHOTO;
+import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract.TableColumns.TITLE;
 
+public class TvShowDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
     ProgressBar progressBar;
     MoviesItems movie = new MoviesItems();
-    int zero = 0;
     private TvShowHelper tvShowHelper;
+    Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tv_show_detail);
 
-        movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
         TextView tvTitle = findViewById(R.id.tv_titleTv);
         ImageView img = findViewById(R.id.img_detailtv);
         TextView tvOverview = findViewById(R.id.tv_overviewTv);
         progressBar = findViewById(R.id.progressBar);
+
+        movie = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        tvShowHelper = TvShowHelper.getInstance(this);
 
         showLoading(true);
         if (movie != null) {
@@ -45,10 +54,6 @@ public class TvShowDetailActivity extends AppCompatActivity {
                     .into(img);
             showLoading(false);
         }
-
-        tvShowHelper = TvShowHelper.getInstance(getApplicationContext());
-        tvShowHelper.open();
-
     }
 
     private void showLoading(Boolean state) {
@@ -67,9 +72,11 @@ public class TvShowDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        tvShowHelper.open();
         if (tvShowHelper.isExist(movie.getId())) {
             menu.findItem(R.id.menu_favorite).setIcon(R.drawable.ic_favorite_on);
         }
+        tvShowHelper.close();
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -78,6 +85,7 @@ public class TvShowDetailActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         } else if (item.getItemId() == R.id.menu_favorite) {
+            tvShowHelper.open();
             if (!tvShowHelper.isExist(this.movie.getId())) {
                 item.setIcon(R.drawable.ic_favorite_on);
                 addToFavorite();
@@ -85,31 +93,25 @@ public class TvShowDetailActivity extends AppCompatActivity {
                 item.setIcon(R.drawable.ic_favorite_off);
                 removeFromFavorite();
             }
+            tvShowHelper.close();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void addToFavorite() {
-        long result = tvShowHelper.insert(this.movie);
-        if (result > zero)
-            Toast.makeText(this, getResources().getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(_ID, movie.getId());
+        contentValues.put(TITLE, movie.getTitle());
+        contentValues.put(OVERVIEW, movie.getOverview());
+        contentValues.put(PHOTO, movie.getPhoto());
 
-        else
-            Toast.makeText(this, getResources().getString(R.string.fail_favorite), Toast.LENGTH_SHORT).show();
+        getContentResolver().insert(CONTENT_URI_TV, contentValues);
+        Toast.makeText(this, getResources().getString(R.string.add_favorite), Toast.LENGTH_SHORT).show();
     }
 
     private void removeFromFavorite() {
-        int result = tvShowHelper.delete(movie.getId());
-        if (result > zero) {
-            Toast.makeText(this, getResources().getString(R.string.remove_favorite), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getResources().getString(R.string.fail_remove), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        tvShowHelper.close();
+        uri = Uri.parse(CONTENT_URI_TV + "/" + movie.getId());
+        getContentResolver().delete(uri, null, null);
+        Toast.makeText(this, getResources().getString(R.string.remove_favorite), Toast.LENGTH_SHORT).show();
     }
 }
