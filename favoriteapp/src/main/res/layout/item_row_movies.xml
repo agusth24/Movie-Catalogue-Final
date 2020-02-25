@@ -11,6 +11,7 @@
         android:layout_height="150dp"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="16dp"
+        android:contentDescription="@string/now_showing"
         android:scaleType="fitXY" />
 
     <TextView

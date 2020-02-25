@@ -30,8 +30,8 @@ import static com.mifta.project.id.dicodingproyekakhir.database.DatabaseContract
 
 public class MoviesDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
-    ProgressBar progressBar;
-    MoviesItems movie = new MoviesItems();
+    private ProgressBar progressBar;
+    private MoviesItems movie = new MoviesItems();
     private MoviesHelper moviesHelper;
     Uri uri;
 

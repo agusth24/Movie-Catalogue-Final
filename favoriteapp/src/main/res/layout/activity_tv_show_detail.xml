@@ -28,6 +28,7 @@
             android:layout_width="150dp"
             android:layout_height="210dp"
             android:layout_margin="1dp"
+            android:contentDescription="@string/now_showing"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

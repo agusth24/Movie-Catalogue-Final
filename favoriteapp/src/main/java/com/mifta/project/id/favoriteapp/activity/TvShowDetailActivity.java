@@ -14,8 +14,8 @@ import com.mifta.project.id.favoriteapp.model.MoviesItems;
 
 public class TvShowDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE = "extra_movie";
-    ProgressBar progressBar;
-    MoviesItems movie = new MoviesItems();
+    private ProgressBar progressBar;
+    private MoviesItems movie = new MoviesItems();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

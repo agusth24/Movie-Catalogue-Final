@@ -23,6 +23,7 @@
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:contentDescription="@string/now_showing"
             tools:src="@color/colorAccent" />
 
         <TextView

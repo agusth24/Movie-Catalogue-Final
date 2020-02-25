@@ -19,9 +19,7 @@
     <string name="now_showing">SEKARANG TAYANG</string>
 
     <string name="add_favorite">Ditambahkan ke Favorit</string>
-    <string name="fail_favorite">Gagal ditambahkan ke Favorit</string>
     <string name="remove_favorite">Dihapus dari Favorit</string>
-    <string name="fail_remove">Gagal dihapus dari Favorit</string>
     <string name="notif">Pemberitahuan</string>
     <string name="search">cari</string>
     <string name="search_movie_hint">Cari Film</string>
@@ -34,6 +32,4 @@
     <string name="title_daily">Pengingat Harian</string>
     <string name="daily_message">Periksa koleksi Katalog Film sekarang</string>
     <string name="title_release">Pengigat Terbitan Hari Ini</string>
-    <string name="release_message">Periksa Film yang terbik hari ini sekarang juga</string>
-    <string name="release_empty">Tidak ada Film yang terbit hari ini</string>
 </resources>
